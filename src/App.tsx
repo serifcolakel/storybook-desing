@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Title = styled.h1`
@@ -7,11 +7,12 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.section<{
-  background?: string;
+  backgroundColor?: string;
 }>`
   padding: 4em;
-  background: ${(props) => props.background || "papayawhip"};
-  color: ${(props) => (!!props.background ? "white" : "black")};
+  background: ${({ backgroundColor }) => backgroundColor ?? "cyan"};
+  color: ${({ backgroundColor }) =>
+    backgroundColor === undefined ? "white" : "black"};
 `;
 
 const Button = styled.button`
@@ -21,6 +22,7 @@ const Button = styled.button`
   margin: 1em;
   padding: 0.25em 1em;
   border: 1px solid #f0f;
+  background-color: white;
   border-radius: 3px;
   display: block;
   border-radius: 0.25em;
@@ -35,11 +37,39 @@ const TomatoButton = styled(Button)`
   border-color: tomato;
 `;
 
-function App() {
+function App(): JSX.Element {
+  const [backgroundColor, setBackgroundColor] = useState<string>();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBackgroundColor((prev) => {
+        switch (prev) {
+          case undefined:
+            return "red";
+          case "green":
+            return "blue";
+
+          default:
+            return "white";
+        }
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <Wrapper>
-      <Title>Hello World!</Title>
-      <Button onClick={() => alert("Hello World!")}>Normal Button</Button>
+      <Title>{backgroundColor}</Title>
+      <Button
+        onClick={() => {
+          alert("Hello World!");
+        }}
+      >
+        Normal Button
+      </Button>
       <Button as="a" href="#">
         Link with Button styles
       </Button>
