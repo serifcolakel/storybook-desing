@@ -26,7 +26,7 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
     "react/jsx-props-no-spreading": [
-      "warn"
+      "off"
     ],
     "max-len": [ //? https://eslint.org/docs/rules/max-len
       "error",
@@ -47,6 +47,7 @@
         "shorthandFirst": true
       }
     ],
+    "react/require-default-props": ["off"],
     "no-else-return": "error", //? https://eslint.org/docs/rules/no-else-return
     "@typescript-eslint/explicit-function-return-type": "off",
     "quotes": [
