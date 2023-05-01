@@ -1,25 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+`;
+
+const Wrapper = styled.section<{
+  background?: string;
+}>`
+  padding: 4em;
+  background: ${(props) => props.background || "papayawhip"};
+  color: ${(props) => (!!props.background ? "white" : "black")};
+`;
+
+const Button = styled.button`
+  display: inline-block;
+  color: #f0f;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 1px solid #f0f;
+  border-radius: 3px;
+  display: block;
+  border-radius: 0.25em;
+  &:hover {
+    color: white;
+    background-color: #f0f;
+  }
+`;
+
+const TomatoButton = styled(Button)`
+  color: tomato;
+  border-color: tomato;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      <Title>Hello World!</Title>
+      <Button onClick={() => alert("Hello World!")}>Normal Button</Button>
+      <Button as="a" href="#">
+        Link with Button styles
+      </Button>
+      <TomatoButton as="a" href="#">
+        Link with Tomato Button styles
+      </TomatoButton>
+    </Wrapper>
   );
 }
 
