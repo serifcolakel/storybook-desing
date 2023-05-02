@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./header.css";
-import Button from "./Button";
 
 interface User {
 	name: string;
@@ -49,27 +48,12 @@ export default function Header({
 				</div>
 				<div>
 					{user != null ? (
-						<>
-							<span className="welcome">
+						<span className="welcome">
 								Welcome, <b>{user.name}</b>!
 							</span>
-							<Button
-								backgroundColor={undefined}
-								label="Log out"
-								onClick={onLogout}
-								primary={undefined}
-								size="small"
-							/>
-						</>
 					) : (
 						<>
-							<Button label="Log in" onClick={onLogin} size="small" />
-							<Button
-								primary
-								label="Sign up"
-								onClick={onCreateAccount}
-								size="small"
-							/>
+					
 						</>
 					)}
 				</div>

@@ -1,53 +1,67 @@
 import React from "react";
-import "./button.css";
+import { type VariantProps, cva } from "class-variance-authority";
+import clsx from "clsx";
 
-interface ButtonProps {
-	/**
-	 * Is this the principal call to action on the page?
-	 */
-	primary?: boolean;
-	/**
-	 * What background color to use
-	 */
-	backgroundColor?: string;
-	/**
-	 * How large should the button be?
-	 */
-	size?: "small" | "medium" | "large";
-	/**
-	 * Button contents
-	 */
-	label: string;
-	/**
-	 * Optional click handler
-	 */
-	onClick?: () => void;
+const buttonStyles = cva("flex flex-row gap-x-4", {
+	variants: {
+		buttonType: {
+			primary: "bg-blue-500 text-white border-blue-500 hover:bg-blue-600",
+			secondary: "bg-white text-blue-500 border-blue-500 hover:bg-blue-50",
+			outline: "border-blue-500 hover:bg-blue-50",
+			ghost: "text-blue-500 hover:bg-blue-50",
+			link: "text-blue-500 hover:underline",
+		},
+		size: {
+			default: ["text-base", "py-2", "px-4"],
+			small: ["text-sm", "py-1", "px-2"],
+			large: ["text-lg", "py-3", "px-6"],
+			xxl: ["text-2xl", "py-4", "px-8"],
+		},
+		radius: {
+			default: "rounded-md",
+			sm: "rounded-sm",
+			lg: "rounded-lg",
+			xl: "rounded-xl",
+			xxl: "rounded-2xl",
+			none: "rounded-none",
+			full: "rounded-full",
+		},
+	},
+	compoundVariants: [
+		{ buttonType: "primary", size: "default" },
+	],
+	defaultVariants: {
+		buttonType: "primary",
+		size: "default",
+		radius: "default",
+	},
+});
+
+export interface ButtonProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+		VariantProps<typeof buttonStyles> {
+	leftIcon?: React.ReactNode;
+	rightIcon?: React.ReactNode;
 }
 
-/**
- * Primary UI component for user interaction
- */
 export default function Button({
-	primary = false,
-	size = "medium",
-	backgroundColor,
-	label,
+	className,
+	buttonType,
+	size,
+	radius,
+	rightIcon,
+	leftIcon,
 	...props
 }: ButtonProps) {
-	const mode = primary
-		? "storybook-button--primary"
-		: "storybook-button--secondary";
-
 	return (
 		<button
-			className={["storybook-button", `storybook-button--${size}`, mode].join(
-				" ",
-			)}
-			style={{ backgroundColor }}
-			type="button"
+			className={clsx(className, buttonStyles({ buttonType, size, radius }))}
 			{...props}
+			type="button"
 		>
-			{label}
+			{Boolean(leftIcon) && leftIcon}
+			{props.children}
+			{Boolean(rightIcon) && rightIcon}
 		</button>
 	);
 }
