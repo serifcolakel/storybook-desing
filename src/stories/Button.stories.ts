@@ -8,7 +8,6 @@ const meta = {
   component: Button,
   tags: ["autodocs"],
   argTypes: {
-    backgroundColor: { control: "color" },
   },
 } satisfies Meta<typeof Button>;
 
@@ -18,40 +17,33 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {
   args: {
-    primary: true,
-    backgroundColor: "#ff0000",
     onClick: () => { alert("Primary Clicked!"); },
-    size: "medium",
-    label: "Button",
+    children: "Primary",
+    size: "default",
   },
 };
 
 export const Secondary: Story = {
   args: {
-    label: "Button",
-    backgroundColor: "#00ff00",
     onClick: () => { alert("Secondary Clicked!"); },
-    size: "medium",
-    primary: false,
+    children: "Secondary",
+    buttonType: "secondary",
+    size: "large",
   },
 };
 
 export const Large: Story = {
   args: {
-    label: "Button",
-    backgroundColor: "#0000ff",
     onClick: () => { alert("Large Clicked!"); },
-    size: "medium",
-    primary: false,
+    children: "Large",
+    size: "large",
   },
 };
 
 export const Small: Story = {
   args: {
-    label: "Button",
-    backgroundColor: "#0000ff",
     onClick: () => { alert("Small Clicked!"); },
-    size: "medium",
-    primary: false,
+    children: "Small",
+    size: "small",
   },
 };

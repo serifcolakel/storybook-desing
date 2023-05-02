@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Button from "./stories/Button";
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -15,7 +16,7 @@ const Wrapper = styled.section<{
     backgroundColor === undefined ? "white" : "black"};
 `;
 
-const Button = styled.button`
+const Button2 = styled.button`
   display: inline-block;
   color: #f0f;
   font-size: 1em;
@@ -32,7 +33,7 @@ const Button = styled.button`
   }
 `;
 
-const TomatoButton = styled(Button)`
+const TomatoButton = styled(Button2)`
   color: tomato;
   border-color: tomato;
 `;
@@ -62,17 +63,18 @@ function App(): JSX.Element {
 
   return (
     <Wrapper>
+      <Button radius="full">Normal Button</Button>
       <Title>{backgroundColor}</Title>
-      <Button
+      <Button2
         onClick={() => {
           alert("Hello World!");
         }}
       >
         Normal Button
-      </Button>
-      <Button as="a" href="#">
+      </Button2>
+      <Button2 as="a" href="#">
         Link with Button styles
-      </Button>
+      </Button2>
       <TomatoButton as="a" href="#">
         Link with Tomato Button styles
       </TomatoButton>
