@@ -30,6 +30,17 @@ export const Secondary: Story = {
     buttonType: "secondary",
     size: "large",
   },
+  // custom render function
+  render: (args): JSX.Element => {
+    window.console.log("Buttonargs", args);
+
+    return <Button {...args} />;
+  },
+  decorators: [
+    (Story: React.ComponentType): JSX.Element => (
+      <Story />
+    ),
+  ],
 };
 
 export const Large: Story = {
