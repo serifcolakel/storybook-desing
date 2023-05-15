@@ -1,0 +1,16 @@
+# .github/workflows/chromatic.yml
+
+# Other necessary configuration
+on: push
+name: Deploy Storybook to Chromatic on push
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # 👇 Adds Chromatic as a step in the workflow
+    - name: Publish to Chromatic
+      uses: chromaui/action@v1
+      with:
+        projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        exitZeroOnChanges: true
+        onlyChanged: true # 👈 Required option to enable TurboSnap
