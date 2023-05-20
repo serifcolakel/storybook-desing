@@ -8,7 +8,7 @@ const meta = {
 	tags: ["autodocs"],
   decorators: [
 		(Story: React.ComponentType): JSX.Element => (
-			<div className="flex items-center justify-center w-full h-screen">
+			<div className="flex items-center justify-center w-full h-60">
 				<Story />
 			</div>
 		),
