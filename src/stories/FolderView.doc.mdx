@@ -1,0 +1,440 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Example/FolderView/Description" />
+
+<style>
+  {`
+    .subheading {
+      --mediumdark: '#999999';
+      font-weight: 700;
+      font-size: 16px;
+      color: #000000cc;
+      letter-spacing: 6px;
+      line-height: 24px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 40px;
+    }
+
+    .link-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 620px) {
+      .link-list {
+        row-gap: 20px;
+        column-gap: 20px;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media all and (-ms-high-contrast:none) {
+    .link-list {
+        display: -ms-grid;
+        -ms-grid-columns: 1fr 1fr;
+        -ms-grid-rows: 1fr 1fr;
+      }
+    }
+
+    .link-item {
+      display: block;
+      padding: 20px;
+      border: 1px solid #00000010;
+      border-radius: 5px;
+      transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+      color: #333333;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .link-item:hover {
+      border-color: #1EA7FD50;
+      transform: translate3d(0, -3px, 0);
+      box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+    }
+
+    .link-item:active {
+      border-color: #1EA7FD;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .link-item strong {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .link-item img {
+      height: 40px;
+      width: 40px;
+      margin-right: 15px;
+      flex: none;
+    }
+
+    .link-item span,
+    .link-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .tip {
+      display: inline-block;
+      border-radius: 1em;
+      font-size: 11px;
+      line-height: 12px;
+      font-weight: 700;
+      background: #E7FDD8;
+      color: #66BF3C;
+      padding: 4px 12px;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+
+    .tip-wrapper {
+      font-size: 13px;
+      line-height: 20px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .tip-wrapper code {
+      font-size: 12px;
+      display: inline-block;
+    }
+  `}
+</style>
+
+# FolderView Component with Recursive Children
+
+In this section, we will learn how to use the FolderView component to render a folder structure with children.
+
+<div className="subheading">Definition of Recursive Method</div>
+
+_In TypeScript, a recursive method is a function that calls itself within its own body. It is a programming technique used to solve problems that can be divided into smaller subproblems of the same kind. The recursive function continues to call itself with modified input parameters until a base condition is met, at which point the recursion stops and the function starts returning values._
+
+```ts
+
+function factorial(n: number): number {
+  // Base condition: factorial of 0 or 1 is always 1
+  if (n === 0 || n === 1) {
+    return 1;
+  }
+
+  // Recursive call: factorial of n is n multiplied by factorial of (n - 1)
+  return n * factorial(n - 1);
+}
+
+// Call the recursive method
+const result = factorial(5);
+console.log(result); // Output: 120
+
+```
+
+In the example above, we have a function called factorial that calculates the factorial of a given number n. The base condition is defined as **n === 0** or **n === 1**, in which case the function simply returns 1. Otherwise, the function calls itself with the parameter n - 1 and multiplies the result with n. This process continues until the base condition is met, effectively calculating the factorial.
+
+In this case, when we call factorial(5), the function is recursively called with **n = 5, n = 4, n = 3, n = 2, and finally n = 1**. At this point, the base condition is met, and the recursion stops. The values are then multiplied together as the recursive calls are resolved, resulting in the factorial of 5, which is 120.
+
+
+-----
+
+<div className="subheading">Recursive Simple React Component</div>
+
+> Recursive components in React refer to the practice of creating components that can render themselves, or other instances of the same component, within their own structure. This technique is useful when building dynamic and hierarchical UIs, where components need to be nested and repeated multiple times.
+
+To implement recursive components in React, you typically define a component that renders its own instance as a child component. This recursion can continue indefinitely, creating a nested structure of components.
+
+Here's an example of a recursive component called `RecursiveComponent`:
+
+```tsx
+
+import React from 'react';
+
+const RecursiveComponent = ({ value }: { value: number }) => {
+  if (value <= 0) {
+    return null;
+  }
+
+  return (
+    <div>
+      <p>{value}</p>
+      <RecursiveComponent value={value - 1} />
+    </div>
+  );
+};
+
+export default RecursiveComponent;
+
+```
+
+In this example, the RecursiveComponent takes a value prop, which determines the depth of recursion. When the value reaches zero or becomes negative, the recursion stops, and null is returned, preventing further nesting.
+
+By rendering an instance of RecursiveComponent within itself, each instance will render its own child component until the base case is reached.
+
+To use the RecursiveComponent in another component, you can import and include it like any other component:
+
+```tsx
+import React from 'react';
+import RecursiveComponent from './RecursiveComponent';
+
+export const App: React.FC = () => {
+  return (
+    <div>
+      <RecursiveComponent value={3} />
+    </div>
+  );
+};
+
+```
+-----
+
+<div className="subheading">Recursive FolderView Component</div>
+
+The FolderView component is a recursive component that renders a folder structure with children. It is used to render the folder structure in the [FolderView](?path=/story/example-folderview--docs) component. It is also used to render the children of a folder when the folder is expanded. It is a recursive component because it renders itself when it encounters a folder with children. This allows the component to render the entire folder structure.
+
+```tsx
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import FolderNode from "./FolderNode";
+
+export interface FolderViewItem {
+  label: string;
+  folderId: string;
+  folderPath: string;
+  folderSubItems?: FolderViews;
+}
+
+export type FolderViews = Record<number, FolderViewItem>;
+
+interface Props {
+  /**
+   * @description The items to display in the tree view.
+   * @type {TreeViews}
+   * @memberof CustomFolderView
+   */
+  viewItems: FolderViews;
+  /**
+   * @description The function to call when a node is selected.
+   * @param folderId The id of the folder that was selected.
+   * @memberof CustomFolderView
+   * @returns void
+   */
+  onNodeSelect: (folderId: string) => void;
+}
+
+function FolderView({ viewItems, onNodeSelect }: Props) {
+  const [ selectedNode, setSelectedNode ] = useState<string | undefined>(
+    undefined,
+  );
+
+  useEffect(() => {
+    if (selectedNode !== undefined) {
+       onNodeSelect(selectedNode);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ selectedNode ]);
+
+  return (
+    <motion.div
+      animate={{ y: 0 }}
+      initial={{ y: "-1vw" }}
+      transition={{ stiffness: 250 }}
+    >
+      {Object.values(viewItems).map((item: FolderViewItem) => (
+        <FolderNode
+          item={item}
+          key={item.folderId}
+          selectedNode={selectedNode}
+          setSelectedNode={setSelectedNode}
+        />
+      ))}
+    </motion.div>
+  );
+}
+
+export default FolderView;
+
+```
+
+-----
+
+<div className="subheading">Recursive FolderNode Component</div>
+
+The FolderNode component is a recursive component that renders a folder node with children. It is used to render the folder structure in the [FolderView](?path=/story/example-folderview--docs) component. It is also used to render the children of a folder when the folder is expanded. It is a recursive component because it renders itself when it encounters a folder with children. This allows the component to render the entire folder structure.
+
+```tsx
+
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FcOpenedFolder, FcFolder } from "react-icons/fc";
+import { BsFolderCheck } from "react-icons/bs";
+import { type FolderViewItem } from "./FolderView";
+
+function FolderNode({
+	item,
+	initiallyExpanded = false,
+	setSelectedNode,
+	selectedNode,
+}: {
+	item: FolderViewItem;
+	initiallyExpanded?: boolean;
+	setSelectedNode: React.Dispatch<React.SetStateAction<string | undefined>>;
+	selectedNode?: string;
+}) {
+	// This code checks if the item has any sub items.
+	const hasSubItems: boolean =
+		(item?.folderSubItems != null &&
+			Object.keys(item.folderSubItems).length > 0) ||
+		false;
+
+	const [isExpanded, setIsExpanded] = useState(initiallyExpanded);
+
+	// Handle node selection
+	const handleNodeSelect = (): void => {
+		// Do nothing if the node has sub-items
+		if (hasSubItems) {
+			return;
+		}
+
+		// Set the selected node
+		setSelectedNode(item.folderId);
+	};
+
+	// Toggle the expand state
+	const toggleExpand = (): void => {
+		// Toggle the expand state
+		setIsExpanded(!isExpanded);
+
+		// Handle node selection
+		handleNodeSelect();
+	};
+
+	// Determine if the node is selected
+	const isSelected: boolean = selectedNode === item.folderId;
+
+	// If the item does not have sub items, then we can
+	// remove it from the list. The user has no way to
+	// expand the item, so there is no reason to keep
+	// it in the list. We can also remove any other
+	// items that are not expandable.
+	if (!hasSubItems) {
+		return (
+			<motion.div
+				animate={{ opacity: 1 }}
+				aria-hidden="true"
+				className={`w-full pl-2 flex flex-row gap-x-4 rounded-lg py-2 cursor-pointer hover:bg-gray-100 ${
+					isSelected ? "bg-yellow-100" : ""
+				} ${!hasSubItems ? "!ml-8" : ""}`}
+				initial={{ opacity: 0 }}
+				onClick={handleNodeSelect}
+				transition={{
+					duration: 0.1,
+					staggerChildren: 0.1,
+					delayChildren: 0.1,
+					staggerDirection: 1,
+					stiffness: 100,
+				}}
+			>
+				<FcFolder size={24} />
+				<label className="cursor-pointer" htmlFor={item.folderId}>
+					{item.label}
+				</label>
+				{isSelected && (
+					<motion.div
+						animate={{ opacity: 1, y: 0, x: 0 }}
+						className="flex items-center justify-center"
+						initial={{ opacity: 0, y: -10, x: -10 }}
+						transition={{ duration: 0.2 }}
+					>
+						<BsFolderCheck size={24} />
+					</motion.div>
+				)}
+			</motion.div>
+		);
+	}
+
+	return (
+		<motion.div
+			animate={{ height: "auto", opacity: 1 }}
+			className="w-full ml-8"
+			initial={{ height: 0, opacity: 0 }}
+			transition={{ duration: 0.2 }}
+		>
+			<div
+				aria-hidden="true"
+				className={`flex flex-row w-full pl-2 rounded-md py-2 cursor-pointer gap-x-4 hover:bg-gray-100 ${
+					isSelected ? "bg-yellow-100" : ""
+				}`}
+				onClick={toggleExpand}
+			>
+				{isExpanded ? <FcOpenedFolder size={24} /> : <FcFolder size={24} />}
+				<label className="cursor-pointer" htmlFor={item.folderId}>
+					{item.label}
+				</label>
+			</div>
+			{isExpanded && hasSubItems && (
+				<ul className="w-full">
+					{Object.values(item.folderSubItems ?? []).map(
+						(subItem: FolderViewItem) => (
+							<li className="flex w-full py-0.5 gap-x-4" key={subItem.folderId}>
+								<FolderNode
+									item={subItem}
+									selectedNode={selectedNode}
+									setSelectedNode={setSelectedNode}
+								/>
+							</li>
+						),
+					)}
+				</ul>
+			)}
+		</motion.div>
+	);
+}
+
+export default FolderNode;
+
+```
+
+<div className="subheading">When should you use recursion with React?</div>
+
+<div className="tip-wrapper">
+  <span className="tip">Tip</span>Edit the Markdown in{' '}
+  Recursive components are useful when you need to render a dynamic and hierarchical UI, where components need to be nested and repeated multiple times. For example, a folder structure is a good use case for recursive components, as folders can contain other folders, which can contain other folders, and so on.
+</div>
+
+<div className="tip-wrapper">
+  <span className="tip">Tip</span>Edit the Markdown in{' '}
+  Recursive components are also useful when you need to render a tree structure, such as a file system, a family tree, or a nested list.
+</div>
+
+<div className="tip-wrapper">
+  <span className="tip">Tip</span>Edit the Markdown in{' '}
+  Another use case for recursive components is when you need to render a list of items that can be nested. For example, a list of comments, where each comment can have a list of replies, which can have a list of replies, and so on.
+</div>
+
+<div className="tip-wrapper">
+  <span className="tip">Tip</span>Edit the Markdown in{' '}
+  This is a good use case for recursive components because the component can render itself when it encounters a nested item, allowing it to render the entire list of items.
+</div>
+
+-----
+<div className="subheading">References</div>
+
+In addition to the links above, here are some other useful references:
+
+- Learn more about [writing stories](https://storybook.js.org/docs/react/writing-stories/introduction) in the Storybook docs.
+- Learn more about [configuring Storybook](https://storybook.js.org/docs/react/configure/overview) in the Storybook docs.
+- Learn more about [using Storybook](https://storybook.js.org/docs/react/get-started/overview) in the Storybook docs.
+- Learn more about [deploying Storybook](https://storybook.js.org/docs/react/workflows/deploy-storybook) in the Storybook docs.
+- Learn more about [the addon ecosystem](https://storybook.js.org/docs/react/essentials/introduction) in the Storybook docs.
+- Learn more about [the API](https://storybook.js.org/docs/react/api/api-reference) in the Storybook docs.
+- Learn more about [the CLI](https://storybook.js.org/docs/react/workflows/cli-options) in the Storybook docs.
+- Learn more about [supporting multiple component libraries](https://storybook.js.org/docs/react/configure/theming) in the Storybook docs.
+- Learn more about [theming Storybook](https://storybook.js.org/docs/react/configure/theming) in the Storybook docs.
+- Learn more about [writing addons](https://storybook.js.org/docs/react/extending/extending-storybook) in the Storybook docs.
+- Learn more about [the Storybook community](https://storybook.js.org/community) in the Storybook docs.
+- Learn more about [contributing to Storybook](https://storybook.js.org/docs/react/workflows/contributing) in the Storybook docs.
+
