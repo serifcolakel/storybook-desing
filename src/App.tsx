@@ -3,6 +3,7 @@
 import styled from "styled-components";
 import Button from "./components/button/Button";
 import Checkbox from "./components/checkbox/Checkbox";
+import FolderView from "./components/folder-view/FolderView";
 
 const Title = styled.h1`
 	font-size: 1.5em;
@@ -123,6 +124,66 @@ function App() {
 					<div className="w-20 h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 mr-3" />
 					<div className="w-24 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
 				</div>
+			</div>
+			<div className="w-1/4">
+				<FolderView
+					onNodeSelect={(folderId) => {
+						window.console.log({ folderId });
+					}}
+					viewItems={[
+						{
+							folderId: "1",
+							label: "Folder 1",
+							folderPath: "folder-1",
+							folderSubItems: [
+								{
+									folderId: "1.1",
+									label: "Folder 1.1",
+									folderPath: "folder-1/folder-1.1",
+								},
+								{
+									folderId: "1.2",
+									label: "Folder 1.2",
+									folderPath: "folder-1/folder-1.2",
+									folderSubItems: [
+										{
+											folderId: "1.2.1",
+											label: "Folder 1.2.1",
+											folderPath: "folder-1/folder-1.2/folder-1.2.1",
+											folderSubItems: [
+												{
+													folderId: "1.2.1.1",
+													label: "Folder 1.2.1.1",
+													folderPath:
+														"folder-1/folder-1.2/folder-1.2.1/folder-1.2.1.1",
+												},
+												{
+													folderId: "1.2.1.2",
+													label: "Folder 1.2.1.2",
+													folderPath:
+														"folder-1/folder-1.2/folder-1.2.1/folder-1.2.1.2",
+													folderSubItems: [
+														{
+															folderId: "1.2.1.2.1",
+															label: "Folder 1.2.1.2.1",
+															folderPath:
+																"folder-1/folder-1.2/folder-1.2.1/folder-1.2.1.2/folder-1.2.1.2.1",
+														},
+													],
+												},
+											],
+										},
+										{
+											folderId: "1.2.2",
+											label: "Folder 1.2.2",
+											folderPath: "folder-1/folder-1.2/folder-1.2.2",
+										},
+									],
+								},
+							],
+						},
+					]}
+				/>
 			</div>
 		</Wrapper>
 	);
