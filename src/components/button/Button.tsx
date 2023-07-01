@@ -3,7 +3,6 @@ import { type VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 
 const buttonStyles = cva(
-	// eslint-disable-next-line max-len
 	"flex flex-row gap-x-4 disabled:cursor-not-allowed items-center justify-center",
 	{
 		variants: {

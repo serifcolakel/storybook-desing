@@ -1,7 +1,11 @@
 {
-  "name": "storybook",
+  "name": "@serifcolakel/serif-ui",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "license": "MIT",
   "dependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,17 +18,21 @@
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "framer-motion": "^10.12.12",
+    "http": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-scripts": "5.0.1",
+    "rollup-plugin-postcss": "^4.0.2",
     "styled-components": "^5.3.10",
     "web-vitals": "^2.1.4",
     "zod": "^3.21.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "rollup -c --watch",
+    "tailwind": "npx tailwindcss -o ./dist/index.css --minify",
+    "build": "npm run tailwind && rollup -c",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
@@ -32,7 +40,7 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --project-token CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "npx chromatic --project-token=chpt_4bad8f90249a87d"
   },
   "eslintConfig": {
     "extends": [
@@ -91,9 +99,15 @@
     "husky": "^8.0.0",
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
+    "rollup": "^3.26.0",
+    "rollup-plugin-typescript2": "^0.35.0",
     "storybook": "^7.0.7",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4",
     "webpack": "^5.81.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }
